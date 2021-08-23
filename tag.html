@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery标签输入插件</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" href="css/jquery.tagsinput-revisited.css" />
+	<style type="text/css">
+		.jq22-content {
+			width: 800px;
+			margin: 20px auto;
+		}
+		label {
+			display: block;
+			padding: 20px 0 5px 0;
+		}
+</style>
+	</head>
+	<body>
+<div class="jq22-content">
+		<form id="form">
+		<label>基本的标签输入：</label>
+		<input id="form-tags-1" name="tags-1" type="text" value="carrot,potato,pizza">
+		<label>带回调函数的标签输入 (check console):</label>
+		<input id="form-tags-2" name="tags-2" type="text" value="apple,banana,pizza">
+		<label>带校验的标签输入：</label>
+		<input id="form-tags-3" name="tags-3" type="text" value="">
+		<label>带自动完成功能的标签输入：</label>
+		<input id="form-tags-4" name="tags-4" type="text" value="">
+		<label>用分号分隔标签：</label>
+		<input id="form-tags-5" name="tags-5" type="text" value="more;pizza">
+		<label>Tags input with array of delimiters (comma and semicolon):</label>
+		<input id="form-tags-6" name="tags-6" type="text" value="more;pizza">
+	</form>
+	</div>
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery-ui.min.js"></script> 
+<script src="js/jquery.tagsinput-revisited.js"></script> 
+<script type="text/javascript">
+		$(function() {
+			$('#form-tags-1').tagsInput();
+			
+			$('#form-tags-2').tagsInput({
+				'onAddTag': function(input, value) {
+					console.log($(this).val());
+				},
+				'onRemoveTag': function(input, value) {
+					console.log($(this).val());
+				},
+				'onChange': function(input, value) {
+					console.log($(this).val());
+				}
+			});
+			
+			$('#form-tags-3').tagsInput({
+				'unique': true,
+				'minChars': 2,
+				'maxChars': 10,
+				'limit': 5,
+				'validationPattern': new RegExp('^[a-zA-Z]+$')
+			});
+			var n = "apple,banana,orange,pizza";
+			var names=n.split(",");
+			
+			$('#form-tags-4').tagsInput({
+				'autocomplete': {
+					source: names
+				}
+			});
+			
+			$('#form-tags-5').tagsInput({
+				'delimiter': ';' 
+			});
+			
+			$('#form-tags-6').tagsInput({
+				'delimiter': [',', ';'] 
+			});
+		});
+	</script>
+</body>
+</html>
